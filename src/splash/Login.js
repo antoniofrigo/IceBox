@@ -1,25 +1,31 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
-import { TextField, Button, InputAdornment, IconButton, Input} from "@material-ui/core";
-import {Visibility, VisibilityOff} from '@material-ui/icons';
+import {
+    TextField,
+    Button,
+    InputAdornment,
+    IconButton,
+    Input,
+} from "@material-ui/core";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 class Login extends Component {
-	constructor(props){
-		super(props)
-		this.state = {"show": false}
-	}
+    constructor(props) {
+        super(props);
+        this.state = { show: false };
+    }
 
-	handleShow = (e) => {
-		e.preventDefault()
-		this.setState({"show": !this.state.show})
-	}
-	
+    handleShow = (e) => {
+        e.preventDefault();
+        this.setState({ show: !this.state.show });
+    };
+
     render() {
         const firebase = this.props.firebase;
         return (
             <Formik
                 enableReinitialize={true}
-                initialValues={{ email: "", password: ""}}
+                initialValues={{ email: "", password: "" }}
                 onSubmit={(values) => {
                     firebase
                         .auth()
@@ -38,8 +44,8 @@ class Login extends Component {
                 {(props) => (
                     <form onSubmit={props.handleSubmit}>
                         <TextField
-                        	style={{"width": "200pt"}}
-                        	required
+                            style={{ width: "200pt" }}
+                            required
                             id="email"
                             name="email"
                             value={props.values.email}
@@ -48,26 +54,31 @@ class Login extends Component {
                         />
                         <br />
                         <Input
-                        	style={{"width": "200pt"}}
-                        	required
+                            style={{ width: "200pt" }}
+                            required
                             id="password"
                             name="password"
-                            type={this.state.show ? 'text' : 'password'}
+                            type={this.state.show ? "text" : "password"}
                             value={props.values.password}
                             placeholder="Password"
                             onChange={props.handleChange}
                             endAdornment={
-							<InputAdornment position="end">
-							<IconButton
-								aria-label="toggle password visibility"
-								onClick={this.handleShow}
-								onMouseDown={this.handleShow}
-							>
-								{this.state.show ? <Visibility /> : <VisibilityOff />}
-							</IconButton>
-							</InputAdornment>}
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={this.handleShow}
+                                        onMouseDown={this.handleShow}
+                                    >
+                                        {this.state.show ? (
+                                            <Visibility />
+                                        ) : (
+                                            <VisibilityOff />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
                         />
-                        <br/>
+                        <br />
                         <Button
                             color="primary"
                             variant="contained"

@@ -1,0 +1,38 @@
+.base_table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.left_col {
+	text-align: left;
+	font-style: italic;
+	font-size: 10pt;
+}
+
+.center_col {
+	text-align: center;
+	font-size: 10pt;
+}
+
+.right_col {
+	text-align: right;
+	font-size: 10pt;
+}
+
+.problem_statement {	
+}
+
+.main {
+    justify-content: center;
+    display: flex;
+    margin-top: 5vh;
+}
+
+.fab {
+    margin: 0px;
+    top: auto;
+    right: 20px;
+    bottom: 20px;
+    left: auto;
+    position: fixed;
+};	

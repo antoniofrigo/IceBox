@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
     AppBar,
     Toolbar,
-    Button,
     Typography,
     IconButton,
     Drawer,
@@ -12,6 +11,7 @@ import {
 import { Menu, AccountCircle } from "@material-ui/icons";
 
 import Problems from "./Problems.js";
+import AddProblem from "./Add.js";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class Dashboard extends Component {
         this.state = { drawerOpen: false, database: {} };
     }
     componentDidMount() {
-        this.setState({database: this.props.firebase.firestore()});
+        this.setState({ database: this.props.firebase.firestore() });
     }
 
     handleDrawer = () => {
@@ -29,33 +29,34 @@ class Dashboard extends Component {
     render() {
         return (
             <div>
-                <div style={{ flexGrow: "1" }}>
-                    <AppBar position="static">
-                        <Toolbar>
-                            <div style={{ marginRight: "auto" }}>
-                                <IconButton onClick={this.handleDrawer}>
-                                    <Menu />
-                                </IconButton>
-                            </div>
-                            <Typography variant="h5">IceBox</Typography>
-                            <div style={{ marginLeft: "auto" }}>
-                                <IconButton>
-                                    <AccountCircle />
-                                </IconButton>
-                            </div>
-                            <Drawer
-                                open={this.state.drawerOpen}
-                                onClose={this.handleDrawer}
-                                anchor="left"
-                            >
-                                <List>
-                                    <ListItem button>Test</ListItem>
-                                </List>
-                            </Drawer>
-                        </Toolbar>
-                    </AppBar>
-                </div>
-                <Problems database={this.state.database}/>
+                <AppBar position="static">
+                    <Toolbar>
+                        <div style={{ marginRight: "auto" }}>
+                            <IconButton onClick={this.handleDrawer}>
+                                <Menu />
+                            </IconButton>
+                        </div>
+                        <Typography variant="h5">IceBox</Typography>
+                        <div style={{ marginLeft: "auto" }}>
+                            <IconButton>
+                                <AccountCircle />
+                            </IconButton>
+                        </div>
+                        <Drawer
+                            open={this.state.drawerOpen}
+                            onClose={this.handleDrawer}
+                            anchor="left"
+                        >
+                            <List>
+                                <ListItem button>Test</ListItem>
+                            </List>
+                        </Drawer>
+                    </Toolbar>
+                </AppBar>
+                <Problems />
+                <footer>
+                    <AddProblem />
+                </footer>
             </div>
         );
     }
