@@ -7,8 +7,9 @@ import {
     Drawer,
     List,
     ListItem,
+    Fab,
 } from "@material-ui/core";
-import { Menu, AccountCircle } from "@material-ui/icons";
+import { Add, Menu, AccountCircle } from "@material-ui/icons";
 
 import Problems from "./Problems.js";
 import AddProblem from "./Add.js";
@@ -16,7 +17,7 @@ import AddProblem from "./Add.js";
 class Dashboard extends Component {
     constructor(props) {
         super(props);
-        this.state = { drawerOpen: false, database: {} };
+        this.state = { drawerOpen: false, database: {}, dialogOpen: false };
     }
     componentDidMount() {
         this.setState({ database: this.props.firebase.firestore() });
@@ -24,6 +25,10 @@ class Dashboard extends Component {
 
     handleDrawer = () => {
         this.setState({ drawerOpen: !this.state.drawerOpen });
+    };
+
+    handeDialog = () => {
+        this.setState({ dialogOpen: !this.state.dialogOpen });
     };
 
     render() {
@@ -53,9 +58,18 @@ class Dashboard extends Component {
                         </Drawer>
                     </Toolbar>
                 </AppBar>
-                <Problems />
+                <Problems mode="Edit" dialog={this.state.dialogOpen} onClick={this.handeDialog} />
+                <div className="fab">
+                    <Fab onClick={this.handeDialog} color="secondary">
+                        <Add />
+                    </Fab>
+                </div>
                 <footer>
-                    <AddProblem />
+                    <AddProblem
+                        mode="New"
+                        dialog={this.state.dialogOpen}
+                        onClick={this.handeDialog}
+                    />
                 </footer>
             </div>
         );

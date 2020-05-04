@@ -1,39 +1,53 @@
 import React, { Component } from "react";
 import ProblemCard from "./ProblemCard.js";
 import firebase from "../firebase/firebase.js";
-import { Card, CardContent, Typography } from "@material-ui/core";
 
 const db = firebase.firestore();
+
 class Problems extends Component {
     constructor(props) {
         super(props);
         this.state = { cards: [] };
     }
 
-    componentDidMount() {
-        var all_cards = [];
+    get_cards = () => {
         let self = this;
-        db.collection("problems")
-            .get()
-            .then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
+        db.collection("problems").orderBy("date_created", "desc")
+            .onSnapshot((querySnapshot) => {
+                let all_cards = [];
+                querySnapshot.forEach((doc) => {
                     var data = doc.data();
                     all_cards.push(
                         <ProblemCard
                             key={doc.id}
+                            key_code={doc.id}
                             proposer={data.proposer}
                             available={data.available}
                             date_created={data.date_created}
+                            edited={data.edited}
                             statement={data.statement}
-                            category={data.category}
+                            algebra={data.algebra}
+                            combinatorics={data.combinatorics}
+                            geometry={data.geometry}
+                            miscellaneous={data.miscellaneous}
+                            number_theory={data.number_theory}
                             difficulty={data.difficulty}
                         />
                     );
                 });
-                self.setState({ cards: all_cards });
+                self.setState({ cards: all_cards }, () =>
+                    window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub])
+                );
             });
-        window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
+    };
+
+    componentDidMount() {
+        this.get_cards();
     }
+
+    // componentDidUpdate() {
+    //     this.get_cards();
+    // }
 
     render() {
         return (

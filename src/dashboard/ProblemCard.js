@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Card,
 	CardContent,
 	CardActions,
 	Chip,
 	Divider,
+	IconButton,
+	Snackbar,
+	Tooltip,
 } from "@material-ui/core";
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import copy from "copy-to-clipboard";
+import { FileCopy, Edit } from "@material-ui/icons";
+import EditProblem from "./Edit.js";
 
 function ConvertDate(date) {
 	var full_date = new Date(date.seconds * 1000);
 	return full_date.toLocaleDateString("en-US");
 }
 
-function createChip(category) {
+function CreateChip(category, key_code) {
 	var color_list = {
 		Algebra: "#DB4437",
 		Combinatorics: "#F4B400",
@@ -23,28 +28,22 @@ function createChip(category) {
 	};
 	return (
 		<Chip
-			key={color_list[category]}
+			className="chip"
+			key={color_list[category] + key_code}
 			style={{ backgroundColor: color_list[category], color: "#fff" }}
 			label={category}
-			// avatar={<Functions style={{color: "white"}}/>}
 		/>
 	);
 }
 
-function generateChips(chip_array) {
-	if (typeof chip_array !== "undefined") {
-		var chips = [];
-		for (var i = 0; i < chip_array.length; ++i) {
-			chips.push(createChip(chip_array[i]));
-		}
-		return chips;
-	} else {
-		return " ";
-	}
-}
-
 const ProblemCard = (props) => {
-	
+	const [linkOn, SetLink] = useState(false);
+	const [editOn, SetEdit] = useState(false);
+	const handleLink = (statement) => {
+		copy(statement);
+		SetLink(!linkOn);
+	};
+
 	return (
 		<Card style={{ minWidth: 1000, maxWidth: 1000, marginTop: "10pt" }} key={props.id}>
 			<CardContent>
@@ -54,18 +53,40 @@ const ProblemCard = (props) => {
 			</CardContent>
 			<Divider />
 			<CardActions>
-				<div style={{ margin: "10pt" }}>
+				<div>
 					<table className="base_table">
 						<tbody>
 							<tr>
 								<td className="left_col" key="left">
-									{props.proposer} on{" "}
-									{ConvertDate(props.date_created)}
+									{props.proposer} on {ConvertDate(props.date_created)}
+									{typeof props.edited !== "undefined" &&
+										", edited on " + ConvertDate(props.edited)}
+									<br />
+									{props.key_code}
 								</td>
 								<td className="center_col" key="center">
-									{generateChips(props.category)}
+									{props.algebra === true &&
+										CreateChip("Algebra", props.key_code)}
+									{props.combinatorics === true &&
+										CreateChip("Combinatorics", props.key_code)}
+									{props.geometry === true &&
+										CreateChip("Geometry", props.key_code)}
+									{props.number_theory === true &&
+										CreateChip("Number Theory", props.key_code)}
+									{props.miscellaneous === true &&
+										CreateChip("Miscellaneous", props.key_code)}
 								</td>
 								<td className="right_col" key="right">
+									<Tooltip title="Edit problem">
+										<IconButton onClick={() => SetEdit(!editOn)}>
+											<Edit />{" "}
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Copy source to clipboard">
+										<IconButton onClick={() => handleLink(props.statement)}>
+											<FileCopy />{" "}
+										</IconButton>
+									</Tooltip>
 									Difficulty: {props.difficulty}
 								</td>
 							</tr>
@@ -73,6 +94,17 @@ const ProblemCard = (props) => {
 					</table>
 				</div>
 			</CardActions>
+			<Snackbar
+				open={linkOn}
+				autoHideDuration={2000}
+				onClose={() => SetLink(!linkOn)}
+				anchorOrigin={{
+					vertical: "bottom",
+					horizontal: "left",
+				}}
+				message="Source copied to clipboard!"
+			/>
+			<EditProblem dialog={editOn} info={props} onClick={() => SetEdit(!editOn)} />
 		</Card>
 	);
 };

@@ -1,5 +1,13 @@
 TODO
-- Add MathJax previewing 
-- Editing submissions
+- Editing submissions (DONE)
 - Get left sidebar working
+- Get Statistics working
 - Get user account information working
+- Prevent submissions without having at least one category selected
+- Get updating after submission working (DONE)
+- Add availability
+- Add starring for good problems
+- Figure out lazy scrolling
+- Figure out search
+- Add MathJax previewing 
+- Archiving
