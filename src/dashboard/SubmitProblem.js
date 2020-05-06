@@ -1,13 +1,9 @@
-import React from "react";
 import firebase from "../firebase/firebase.js";
 
 const db = firebase.firestore();
 
 const SubmitProblem = (values, mode) => {
 	var now = new Date();
-	var all_cats = ["algebra", "combinatorics", "geometry", "number_theory", "miscellaneous"];
-	var name_list = ["Algebra", "Combinatorics", "Geometry", "Number Theory", "Miscellaneous"];
-	var final_cats = [];
 	if (mode === "New") {
 		db.collection("problems")
 			.add({

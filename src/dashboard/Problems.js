@@ -45,9 +45,6 @@ class Problems extends Component {
         this.get_cards();
     }
 
-    // componentDidUpdate() {
-    //     this.get_cards();
-    // }
 
     render() {
         return (

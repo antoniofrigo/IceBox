@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
-import {
-    TextField,
-    Button,
-    InputAdornment,
-    IconButton,
-    Input,
-} from "@material-ui/core";
+import { TextField, Button, InputAdornment, IconButton, Input } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 class Login extends Component {
@@ -29,14 +23,9 @@ class Login extends Component {
                 onSubmit={(values) => {
                     firebase
                         .auth()
-                        .signInWithEmailAndPassword(
-                            values.email,
-                            values.password
-                        )
+                        .signInWithEmailAndPassword(values.email, values.password)
                         .catch(function (error) {
-                            var errorCode = error.code;
                             var errorMessage = error.message;
-                            alert(errorCode);
                             alert(errorMessage);
                         });
                 }}
@@ -69,11 +58,7 @@ class Login extends Component {
                                         onClick={this.handleShow}
                                         onMouseDown={this.handleShow}
                                     >
-                                        {this.state.show ? (
-                                            <Visibility />
-                                        ) : (
-                                            <VisibilityOff />
-                                        )}
+                                        {this.state.show ? <Visibility /> : <VisibilityOff />}
                                     </IconButton>
                                 </InputAdornment>
                             }

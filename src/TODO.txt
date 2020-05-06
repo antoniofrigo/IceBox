@@ -1,13 +1,17 @@
 TODO
 - Editing submissions (DONE)
-- Get left sidebar working
-- Get Statistics working
-- Get user account information working
-- Prevent submissions without having at least one category selected
+- Prevent submissions without having at least one category selected (DONE)
 - Get updating after submission working (DONE)
+- Get left sidebar working (DONE)
+- Get user account information working (DONE)
+- Get logout working (DONE)
+- Dark mode
+- Add auto-set user name in problems
 - Add availability
 - Add starring for good problems
 - Figure out lazy scrolling
 - Figure out search
 - Add MathJax previewing 
 - Archiving
+- Get Statistics working
+

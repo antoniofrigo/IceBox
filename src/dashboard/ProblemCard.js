@@ -83,7 +83,7 @@ const ProblemCard = (props) => {
 										</IconButton>
 									</Tooltip>
 									<Tooltip title="Copy source to clipboard">
-										<IconButton onClick={() => handleLink(props.statement)}>
+										<IconButton onClick={() => handleLink(props.statement + "\n% Author: " + props.proposer)}>
 											<FileCopy />{" "}
 										</IconButton>
 									</Tooltip>

@@ -1,79 +1,70 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
     AppBar,
     Toolbar,
     Typography,
     IconButton,
-    Drawer,
-    List,
-    ListItem,
     Fab,
+    Tooltip,
 } from "@material-ui/core";
-import { Add, Menu, AccountCircle } from "@material-ui/icons";
+import { Add, AccountCircle, Equalizer } from "@material-ui/icons";
 
 import Problems from "./Problems.js";
 import AddProblem from "./Add.js";
+import Statistics from "./Statistics.js";
+import Profile from "./Profile.js";
+import LogOut from "./LogOut.js";
 
-class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { drawerOpen: false, database: {}, dialogOpen: false };
-    }
-    componentDidMount() {
-        this.setState({ database: this.props.firebase.firestore() });
-    }
+const Dashboard = (props) => {
+    const [statsOpen, handleStats] = useState(false);
+    const [dialogOpen, handleDialog] = useState(false);
+    const [profileOpen, handleProfile] = useState(false);
 
-    handleDrawer = () => {
-        this.setState({ drawerOpen: !this.state.drawerOpen });
-    };
-
-    handeDialog = () => {
-        this.setState({ dialogOpen: !this.state.dialogOpen });
-    };
-
-    render() {
-        return (
-            <div>
-                <AppBar position="static">
-                    <Toolbar>
-                        <div style={{ marginRight: "auto" }}>
-                            <IconButton onClick={this.handleDrawer}>
-                                <Menu />
+    return (
+        <div>
+            <AppBar position="relative" style={{ zIndex: "1400" }}>
+                <Toolbar>
+                    <div style={{ marginRight: "auto" }}>
+                        <Tooltip title="View statistics">
+                            <IconButton onClick={() => handleStats(!statsOpen)}>
+                                <Equalizer />
                             </IconButton>
-                        </div>
+                        </Tooltip>
+                    </div>
+                    <div style={{ marginLeft: "auto", marginRight: "auto" }}>
                         <Typography variant="h5">IceBox</Typography>
-                        <div style={{ marginLeft: "auto" }}>
-                            <IconButton>
+                    </div>
+                    <div style={{ marginLeft: "auto" }}>
+                        <LogOut />
+                        <Tooltip title="View profile information">
+                            <IconButton onClick={() => handleProfile(!profileOpen)}>
                                 <AccountCircle />
                             </IconButton>
-                        </div>
-                        <Drawer
-                            open={this.state.drawerOpen}
-                            onClose={this.handleDrawer}
-                            anchor="left"
-                        >
-                            <List>
-                                <ListItem button>Test</ListItem>
-                            </List>
-                        </Drawer>
-                    </Toolbar>
-                </AppBar>
-                <Problems mode="Edit" dialog={this.state.dialogOpen} onClick={this.handeDialog} />
-                <div className="fab">
-                    <Fab onClick={this.handeDialog} color="secondary">
-                        <Add />
-                    </Fab>
-                </div>
-                <footer>
-                    <AddProblem
-                        mode="New"
-                        dialog={this.state.dialogOpen}
-                        onClick={this.handeDialog}
-                    />
-                </footer>
+                        </Tooltip>
+                    </div>
+                </Toolbar>
+            </AppBar>
+            <Problems mode="Edit" dialog={dialogOpen} onClick={() => handleDialog(!dialogOpen)}/>
+            <div className="fab">
+                <Fab onClick={() => handleDialog(!dialogOpen)} color="secondary">
+                    <Add />
+                </Fab>
             </div>
-        );
-    }
-}
+            <footer>
+                <AddProblem
+                    mode="New"
+                    dialog={dialogOpen}
+                    onClick={() => handleDialog(!dialogOpen)}
+                />
+            </footer>
+            <Statistics open={statsOpen} onClose={() => handleStats(!statsOpen)} />
+            <Profile
+                open={profileOpen}
+                onClose={() => handleProfile(!profileOpen)}
+                user={props.user}
+            />
+        </div>
+    );
+};
 
 export default Dashboard;

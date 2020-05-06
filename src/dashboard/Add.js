@@ -1,6 +1,5 @@
 import React from "react";
 import {
-	FormControl,
 	Dialog,
 	DialogTitle,
 	DialogContent,
@@ -51,7 +50,7 @@ const validate = (values) => {
 	if (!check) {
 		errors.number_theory = "You must select at least one category";
 	}
-	return errors
+	return errors;
 };
 
 const AddProblem = (sent) => {
