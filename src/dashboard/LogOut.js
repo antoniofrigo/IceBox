@@ -15,7 +15,7 @@ const handleClick = (props) => {
 };
 
 const LogOut = (props) => {
-	return <Button onClick={() => handleClick(props)}> Log out</Button>;
+	return <Button style={{"color": "#FFFFFF"}} onClick={() => handleClick(props)}> Log out</Button>;
 };
 
 export default withRouter(LogOut);

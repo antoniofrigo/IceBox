@@ -12,6 +12,7 @@ import {
 import copy from "copy-to-clipboard";
 import { FileCopy, Edit } from "@material-ui/icons";
 import EditProblem from "./Edit.js";
+import UpdateAvail from "./UpdateAvail.js";
 
 function ConvertDate(date) {
 	var full_date = new Date(date.seconds * 1000);
@@ -77,13 +78,26 @@ const ProblemCard = (props) => {
 										CreateChip("Miscellaneous", props.key_code)}
 								</td>
 								<td className="right_col" key="right">
+									<UpdateAvail
+										mode={props.archive}
+										key_code={props.key_code}
+										available={props.available}
+									/>
 									<Tooltip title="Edit problem">
 										<IconButton onClick={() => SetEdit(!editOn)}>
 											<Edit />{" "}
 										</IconButton>
 									</Tooltip>
 									<Tooltip title="Copy source to clipboard">
-										<IconButton onClick={() => handleLink(props.statement + "\n% Author: " + props.proposer)}>
+										<IconButton
+											onClick={() =>
+												handleLink(
+													props.statement +
+														"\n% Author: " +
+														props.proposer
+												)
+											}
+										>
 											<FileCopy />{" "}
 										</IconButton>
 									</Tooltip>

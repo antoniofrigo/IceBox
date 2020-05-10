@@ -5,13 +5,13 @@ TODO
 - Get left sidebar working (DONE)
 - Get user account information working (DONE)
 - Get logout working (DONE)
-- Dark mode
-- Add auto-set user name in problems
-- Add availability
+- Add availability (DONE)
+- Archiving (DONE)
+- Figure out search (DONE)
+	- Fields: Difficulty, Category, Name, Date, ID
 - Add starring for good problems
 - Figure out lazy scrolling
-- Figure out search
 - Add MathJax previewing 
-- Archiving
 - Get Statistics working
-
+- Dark mode
+- Add auto-set user name in problems

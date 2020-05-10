@@ -50,6 +50,7 @@ class Login extends Component {
                             type={this.state.show ? "text" : "password"}
                             value={props.values.password}
                             placeholder="Password"
+                            autoComplete="on"
                             onChange={props.handleChange}
                             endAdornment={
                                 <InputAdornment position="end">

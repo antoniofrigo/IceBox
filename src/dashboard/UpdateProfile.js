@@ -1,8 +1,24 @@
 import firebase from "../firebase/firebase.js";
-var user = firebase.auth().currentUser;
+const UpdateUser = (props, user) => {
+	if (typeof props.old_pass !== "undefined" && props.old_pass !== "") {
+		var credential = firebase.auth.EmailAuthProvider.credential(user.email, props.old_pass);
+		user.reauthenticateWithCredential(credential)
+			.then(function () {
+				if (typeof props.password !== "undefined" && props.password !== "") {
+					user.updatePassword(props.password)
+						.then(function () {
+							alert("Successfully set password!");
+						})
+						.catch(function (error) {
+							alert(error);
+						});
+				}
+			})
+			.catch(function (error) {
+				alert("Original password incorrect")
+			});
+	}
 
-const UpdateUser = (props) => {
-	console.log(props)
 	if (typeof props.name !== "undefined" && props.name !== "") {
 		user.updateProfile({
 			displayName: props.name,
@@ -13,13 +29,6 @@ const UpdateUser = (props) => {
 			.catch(function (error) {
 				alert(error);
 			});
-	}
-	if (typeof props.password !== "undefined" && props.password !== "") {
-		user.updatePassword(props.password).then(function() {
-		  alert("Successfully set password!")
-		}).catch(function(error) {
-		  alert(error)
-		});
 	}
 };
 

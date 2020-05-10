@@ -32,7 +32,7 @@ const SubmitProblem = (values, mode) => {
 				difficulty: values.difficulty,
 				statement: values.statement,
 				edited: now,
-				available: true,
+				algebra: values.algebra,
 				combinatorics: values.combinatorics,
 				geometry: values.geometry,
 				number_theory: values.number_theory,

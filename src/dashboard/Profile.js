@@ -17,10 +17,16 @@ import UpdateUser from "./UpdateProfile.js";
 
 const validate = (values) => {
 	const errors = {};
+	if (values.old_pass !== "" && values.password === "") {
+		alert("You have entered an old password, but not your new one. Please do so.");
+		errors.password = "You must enter your new password too!";
+	}
+
 	if (values.password !== values.confirm) {
 		alert("Passwords do not match");
 		errors.password = "Passwords do not match";
 	}
+
 	return errors;
 };
 
@@ -35,6 +41,7 @@ const Password = (props) => {
 			value={props.value}
 			placeholder={props.placeholder}
 			onChange={props.handleChange}
+			autoComplete="off"
 			endAdornment={
 				<InputAdornment position="end">
 					<IconButton
@@ -51,12 +58,12 @@ const Password = (props) => {
 };
 
 const Profile = (props) => {
-	console.log(props.user)
 	return (
 		<Formik
 			enableReinitialize={true}
 			initialValues={{
 				name: "",
+				old_pass: "",
 				password: "",
 				confirm: "",
 			}}
@@ -64,7 +71,7 @@ const Profile = (props) => {
 			validateOnChange={false}
 			validateOnBlur={false}
 			onSubmit={(values, { resetForm }) => {
-				UpdateUser(values)
+				UpdateUser(values, props.user)
 				props.onClose();
 				resetForm({});
 			}}
@@ -86,6 +93,13 @@ const Profile = (props) => {
 							) : (
 								<Typography>Name: {props.user.displayName} </Typography>
 							)}
+							<br />
+							<Password
+								id="old_pass"
+								placeholder="Current password"
+								value={fields.values.old_pass}
+								handleChange={fields.handleChange}
+							/>
 							<br />
 							<Password
 								id="password"
